@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jonathan Bridges — Ceramics & Bronze</title>
+<meta name="description" content="Jonathan Bridges is a prairie potter and sculptor working in porcelain, bronze, brass, and iron. Explore the Lidded Jar Series, Urn Series, and Bronze Series.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #1a1d2e;
+  --bg-surface: #222640;
+  --bg-card: #2a2e48;
+  --gold: #c9a84c;
+  --gold-light: #e4c76b;
+  --gold-dim: #8a7234;
+  --cream: #f0ead6;
+  --cream-soft: #d4cfc0;
+  --white: #f5f2eb;
+  --text-muted: #8b8da0;
+  --text-dim: #5e6078;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-accent: 'Libre Baskerville', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--gold); color: var(--bg-deep); }
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 10000;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+img { display: block; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.25rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.5s ease;
+}
+nav.scrolled {
+  background: rgba(26, 29, 46, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 1px 0 rgba(201, 168, 76, 0.06);
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 400;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--cream-soft);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-muted); text-decoration: none;
+  position: relative; transition: color 0.3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: end;
+  padding: 0 3rem 5rem;
+  position: relative; overflow: hidden;
+  gap: 3rem;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 75% 45%, rgba(42, 46, 72, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 70% at 15% 85%, rgba(201, 168, 76, 0.03) 0%, transparent 55%),
+    var(--bg-deep);
+}
+.hero-line {
+  position: absolute; bottom: 0; left: 3rem;
+  width: 1px; height: 0;
+  background: linear-gradient(to top, var(--gold), transparent);
+  animation: lineGrow 2s 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes lineGrow { to { height: 35vh; } }
+
+.hero-content { position: relative; z-index: 2; padding-bottom: 2rem; }
+.hero-tag {
+  font-family: var(--font-body); font-size: 0.68rem;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1s 0.3s ease forwards;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7vw, 6.5rem);
+  font-weight: 300; line-height: 0.93;
+  color: var(--white); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1.2s 0.5s ease forwards;
+}
+.hero-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+.hero-subtitle {
+  font-family: var(--font-accent);
+  font-size: clamp(0.92rem, 1.5vw, 1.1rem);
+  font-weight: 400; font-style: italic;
+  color: var(--cream-soft); line-height: 1.75;
+  max-width: 480px;
+  opacity: 0; animation: fadeUp 1.2s 0.8s ease forwards;
+}
+
+.hero-images {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  padding-top: 6rem;
+  opacity: 0; animation: fadeUp 1.4s 0.6s ease forwards;
+}
+.hero-img-wrap {
+  overflow: hidden; border-radius: 2px;
+  background: var(--bg-card);
+}
+.hero-img-wrap:first-child {
+  grid-row: 1 / 3;
+}
+.hero-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.88) saturate(0.92);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.hero-img-wrap:hover img {
+  filter: brightness(1) saturate(1);
+  transform: scale(1.03);
+}
+
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; right: 3rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+  opacity: 0; animation: fadeUp 1s 1.5s ease forwards;
+}
+.hero-scroll span {
+  font-size: 0.58rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-muted);
+  writing-mode: vertical-rl;
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: var(--gold-dim);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: ''; position: absolute; top: -100%; left: 0;
+  width: 100%; height: 100%; background: var(--gold);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%{top:-100%} 50%{top:100%} 100%{top:100%} }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION COMMON ===== */
+.section-label {
+  font-family: var(--font-body); font-size: 0.68rem;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); display: block;
+}
+.divider { width: 50px; height: 1px; background: var(--gold-dim); }
+
+/* ===== SERIES SHOWCASE ===== */
+.series { padding: 8rem 3rem; }
+.series-header { text-align: center; margin-bottom: 4.5rem; }
+.series-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 300; color: var(--white); margin-top: 0.75rem;
+}
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1400px; margin: 0 auto;
+}
+.series-card {
+  position: relative; overflow: hidden; cursor: pointer;
+  aspect-ratio: 3/4; background: var(--bg-card); border-radius: 2px;
+}
+.series-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s;
+  filter: brightness(0.82) saturate(0.88);
+}
+.series-card:hover img {
+  transform: scale(1.06);
+  filter: brightness(1) saturate(1);
+}
+.series-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,29,46,0.95) 0%, rgba(26,29,46,0.25) 45%, transparent 75%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2rem; transition: background 0.5s;
+}
+.series-card:hover .series-card-overlay {
+  background: linear-gradient(to top, rgba(26,29,46,0.88) 0%, rgba(26,29,46,0.12) 50%, transparent 80%);
+}
+.series-card-meta {
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem;
+}
+.series-card-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem; font-weight: 400; color: var(--white);
+  letter-spacing: 0.02em;
+}
+.series-card-desc {
+  font-family: var(--font-accent); font-size: 0.8rem;
+  font-style: italic; color: var(--cream-soft); line-height: 1.6;
+  margin-top: 0.5rem; opacity: 0; transform: translateY(8px);
+  transition: all 0.5s 0.1s ease;
+}
+.series-card:hover .series-card-desc { opacity: 1; transform: translateY(0); }
+.series-card-arrow {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  width: 32px; height: 32px;
+  border: 1px solid rgba(201,168,76,0.25); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translate(-5px,5px); transition: all 0.4s;
+}
+.series-card:hover .series-card-arrow { opacity: 1; transform: translate(0,0); }
+.series-card-arrow svg { width: 13px; height: 13px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+
+/* ===== GALLERY STRIP ===== */
+.gallery-strip {
+  padding: 2rem 0;
+  overflow: hidden;
+  position: relative;
+}
+.gallery-strip-track {
+  display: flex; gap: 1rem;
+  animation: marquee 40s linear infinite;
+  width: max-content;
+}
+.gallery-strip-track img {
+  height: 280px; width: auto;
+  object-fit: cover; border-radius: 2px;
+  filter: brightness(0.8) saturate(0.85);
+  transition: filter 0.5s;
+}
+.gallery-strip-track img:hover {
+  filter: brightness(1) saturate(1);
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.gallery-strip::before, .gallery-strip::after {
+  content: ''; position: absolute; top: 0; bottom: 0;
+  width: 120px; z-index: 2;
+  pointer-events: none;
+}
+.gallery-strip::before { left: 0; background: linear-gradient(to right, var(--bg-deep), transparent); }
+.gallery-strip::after { right: 0; background: linear-gradient(to left, var(--bg-deep), transparent); }
+
+/* ===== FEATURED ===== */
+.featured { padding: 7rem 3rem 8rem; }
+.featured-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.15fr 1fr;
+  gap: 4.5rem; align-items: center;
+}
+.featured-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.75rem;
+}
+.featured-img-wrap {
+  overflow: hidden; border-radius: 2px; background: var(--bg-card);
+}
+.featured-img-wrap:first-child { grid-row: 1 / 3; }
+.featured-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.88); transition: all 0.7s ease;
+}
+.featured-img-wrap:hover img { transform: scale(1.04); filter: brightness(1); }
+.featured-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 300; font-style: italic;
+  color: var(--white); margin: 0.75rem 0 0.5rem;
+  line-height: 1.1;
+}
+.piece-details {
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  color: var(--text-muted); text-transform: uppercase;
+}
+.featured-text p {
+  font-family: var(--font-accent);
+  font-size: 0.9rem; line-height: 1.85;
+  color: var(--cream-soft); font-style: italic; margin-bottom: 1.25rem;
+}
+
+/* ===== STATEMENT ===== */
+.statement {
+  padding: 8rem 3rem; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.statement::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px; height: 70px;
+  background: linear-gradient(to bottom, transparent, var(--gold-dim));
+}
+.statement-inner {
+  max-width: 900px; text-align: center;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 4rem; align-items: center;
+}
+.statement-text { text-align: left; }
+.statement blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  font-weight: 300; font-style: italic;
+  line-height: 1.7; color: var(--cream); margin-bottom: 2rem;
+}
+.statement blockquote strong { color: var(--gold); font-weight: 500; }
+.statement .attribution {
+  font-family: var(--font-body); font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.statement-img {
+  width: 260px; height: 340px;
+  overflow: hidden; border-radius: 2px;
+  flex-shrink: 0;
+}
+.statement-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.9) saturate(0.9);
+}
+
+/* ===== EXHIBITIONS ===== */
+.exhibitions { padding: 6rem 3rem 8rem; }
+.exhibitions-inner { max-width: 1100px; margin: 0 auto; }
+.exhibitions-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 3.5rem; border-bottom: 1px solid rgba(201,168,76,0.12);
+  padding-bottom: 1.75rem;
+}
+.exhibitions-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 300; color: var(--white);
+}
+.exhibition-item {
+  display: grid; grid-template-columns: 90px 1fr auto;
+  gap: 2.25rem; padding: 1.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  align-items: baseline; transition: all 0.3s;
+}
+.exhibition-item:hover {
+  padding-left: 0.5rem;
+  border-bottom-color: rgba(201,168,76,0.12);
+}
+.exhibition-year {
+  font-family: var(--font-display); font-size: 1.6rem;
+  font-weight: 300; color: var(--gold);
+}
+.exhibition-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  font-weight: 400; font-style: italic; color: var(--cream); line-height: 1.4;
+}
+.exhibition-venue { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+.exhibition-type {
+  font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(255,255,255,0.05); border-radius: 18px;
+  white-space: nowrap; transition: all 0.3s;
+}
+.exhibition-item:hover .exhibition-type { border-color: rgba(201,168,76,0.25); color: var(--gold); }
+
+/* ===== CV ===== */
+.cv {
+  padding: 6rem 3rem 8rem;
+  background: linear-gradient(180deg, transparent, rgba(42,46,72,0.2), transparent);
+}
+.cv-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+}
+.cv-column h3 {
+  font-family: var(--font-display); font-size: 1.5rem;
+  font-weight: 400; color: var(--gold); margin-bottom: 1.75rem;
+  font-style: italic;
+}
+.cv-entry {
+  margin-bottom: 1.5rem; padding-left: 1.15rem;
+  border-left: 1px solid rgba(201,168,76,0.18);
+}
+.cv-entry-year { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 0.2rem; }
+.cv-entry-title { font-family: var(--font-accent); font-size: 0.88rem; color: var(--cream); margin-bottom: 0.15rem; }
+.cv-entry-detail { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+/* ===== CONTACT ===== */
+.contact { padding: 8rem 3rem; text-align: center; position: relative; }
+.contact::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%); width: 1px; height: 70px;
+  background: linear-gradient(to bottom, transparent, var(--gold-dim));
+}
+.contact h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 300; font-style: italic;
+  color: var(--white); margin: 1.25rem 0 1.5rem;
+}
+.contact-email {
+  font-family: var(--font-body); font-size: 1.05rem;
+  color: var(--cream-soft); text-decoration: none;
+  position: relative; display: inline-block; padding-bottom: 4px;
+  transition: color 0.3s;
+}
+.contact-email::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 1px; background: var(--gold-dim);
+  transition: background 0.3s;
+}
+.contact-email:hover { color: var(--gold-light); }
+.contact-email:hover::after { background: var(--gold); }
+.contact-social {
+  margin-top: 1.75rem; font-size: 0.78rem; color: var(--text-muted);
+}
+.contact-social a { color: var(--cream-soft); text-decoration: none; transition: color 0.3s; }
+.contact-social a:hover { color: var(--gold); }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 1.75rem 3rem;
+  border-top: 1px solid rgba(255,255,255,0.03);
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer span { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.05em; }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0; transform: translateY(35px);
+  transition: opacity 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.12s; }
+.reveal-delay-2 { transition-delay: 0.24s; }
+.reveal-delay-3 { transition-delay: 0.36s; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 0 2rem 4rem; }
+  .hero-images { display: none; }
+  .series-grid { grid-template-columns: repeat(2, 1fr); }
+  .series-card:last-child { grid-column: 1 / -1; aspect-ratio: 16/9; }
+  .featured-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .cv-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .statement-inner { grid-template-columns: 1fr; }
+  .statement-img { display: none; }
+  .statement-text { text-align: center; }
+}
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.25rem; }
+  .nav-links a { font-size: 0.62rem; }
+  .hero { padding: 0 1.5rem 3.5rem; }
+  .hero-scroll { display: none; }
+  .hero-line { left: 1.5rem; }
+  .series { padding: 5rem 1.5rem; }
+  .series-grid { grid-template-columns: 1fr; }
+  .series-card:last-child { aspect-ratio: 3/4; }
+  .featured { padding: 4rem 1.5rem 5rem; }
+  .gallery-strip-track img { height: 200px; }
+  .statement { padding: 5rem 1.5rem; }
+  .exhibitions { padding: 4rem 1.5rem 5rem; }
+  .exhibition-item { grid-template-columns: 65px 1fr; gap: 1rem; }
+  .exhibition-type { display: none; }
+  .cv { padding: 4rem 1.5rem 5rem; }
+  .contact { padding: 5rem 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+@media (max-width: 480px) {
+  .nav-brand { font-size: 0.85rem; letter-spacing: 0.15em; }
+  .hero-title { font-size: 2.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">Jonathan Bridges</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#exhibitions">Exhibitions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Ceramics &middot; Bronze &middot; Porcelain</div>
+    <h1 class="hero-title">Jonathan<br><em>Bridges</em></h1>
+    <p class="hero-subtitle">A prairie potter — making everything with a potter's hand. Porcelain, iron, bronze, and the alchemy of fire.</p>
+  </div>
+  <div class="hero-images">
+    <div class="hero-img-wrap">
+      <img src="images/reliquary.png" alt="Reliquary — Porcelain and Brass urn" loading="eager">
+    </div>
+    <div class="hero-img-wrap">
+      <img src="images/canary-jar.png" alt="Canary Jar — Yellow porcelain lidded jar" loading="eager">
+    </div>
+    <div class="hero-img-wrap">
+      <img src="images/bubblegum.png" alt="Bronze Bubblegum sculpture" loading="eager">
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SERIES -->
+<section class="series" id="work">
+  <div class="series-header reveal">
+    <span class="section-label">Selected Work</span>
+    <h2>The Collections</h2>
+  </div>
+  <div class="series-grid">
+    <div class="series-card reveal reveal-delay-1">
+      <img src="images/canary-jar.png" alt="Canary Jar — Lidded Jar Series">
+      <div class="series-card-overlay">
+        <div class="series-card-meta">Porcelain &middot; Iron</div>
+        <div class="series-card-title">Lidded Jar Series</div>
+        <div class="series-card-desc">Ruby Jars and Canary Jar — vivid porcelain vessels crowned with hand-forged iron finials.</div>
+      </div>
+      <div class="series-card-arrow"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    </div>
+    <div class="series-card reveal reveal-delay-2">
+      <img src="images/monstrance.png" alt="Monstrance — Urn Series">
+      <div class="series-card-overlay">
+        <div class="series-card-meta">Porcelain &middot; Brass &middot; Diamonds</div>
+        <div class="series-card-title">Urn Series</div>
+        <div class="series-card-desc">Reliquary, Monstrance &amp; Tabernacle — sacred vessels honoring the essence of the departed.</div>
+      </div>
+      <div class="series-card-arrow"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    </div>
+    <div class="series-card reveal reveal-delay-3">
+      <img src="images/bronze-swirl.png" alt="Bronze sculpture — Bronze Series">
+      <div class="series-card-overlay">
+        <div class="series-card-meta">Bronze &middot; Pearls</div>
+        <div class="series-card-title">Bronze Series</div>
+        <div class="series-card-desc">Bubblegum &amp; Galloping — rigid permanence pitted against fleeting, reckless joy.</div>
+      </div>
+      <div class="series-card-arrow"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <div class="gallery-strip-track">
+    <img src="images/ruby-jars.png" alt="Ruby Jars" loading="lazy">
+    <img src="images/reliquary-wings.png" alt="Reliquary detail — wings" loading="lazy">
+    <img src="images/bronze-small-1.png" alt="Bronze miniature" loading="lazy">
+    <img src="images/bronze-gold-horse.png" alt="Bronze horse sculpture" loading="lazy">
+    <img src="images/monstrance-detail.png" alt="Monstrance detail" loading="lazy">
+    <img src="images/galloping-detail.png" alt="Galloping detail" loading="lazy">
+    <img src="images/bronze-small-2.png" alt="Bronze sculpture" loading="lazy">
+    <img src="images/galloping-close.png" alt="Galloping closeup" loading="lazy">
+    <img src="images/bronze-bubblegum-detail-1.png" alt="Bronze Bubblegum detail" loading="lazy">
+    <img src="images/bronze-bubblegum-detail-2.png" alt="Bronze Bubblegum detail" loading="lazy">
+    <!-- duplicate set for seamless loop -->
+    <img src="images/ruby-jars.png" alt="Ruby Jars" loading="lazy">
+    <img src="images/reliquary-wings.png" alt="Reliquary detail — wings" loading="lazy">
+    <img src="images/bronze-small-1.png" alt="Bronze miniature" loading="lazy">
+    <img src="images/bronze-gold-horse.png" alt="Bronze horse sculpture" loading="lazy">
+    <img src="images/monstrance-detail.png" alt="Monstrance detail" loading="lazy">
+    <img src="images/galloping-detail.png" alt="Galloping detail" loading="lazy">
+    <img src="images/bronze-small-2.png" alt="Bronze sculpture" loading="lazy">
+    <img src="images/galloping-close.png" alt="Galloping closeup" loading="lazy">
+    <img src="images/bronze-bubblegum-detail-1.png" alt="Bronze Bubblegum detail" loading="lazy">
+    <img src="images/bronze-bubblegum-detail-2.png" alt="Bronze Bubblegum detail" loading="lazy">
+  </div>
+</div>
+
+<!-- FEATURED -->
+<section class="featured">
+  <div class="featured-inner">
+    <div class="featured-images reveal">
+      <div class="featured-img-wrap">
+        <img src="images/tabernacle-views.png" alt="Tabernacle — front and back views">
+      </div>
+      <div class="featured-img-wrap">
+        <img src="images/reliquary-2.png" alt="Reliquary — alternate view">
+      </div>
+      <div class="featured-img-wrap">
+        <img src="images/reliquary-wings.png" alt="Reliquary — winged finial detail">
+      </div>
+    </div>
+    <div class="featured-text reveal reveal-delay-2">
+      <span class="section-label">Featured Work</span>
+      <h2>Tabernacle</h2>
+      <div class="piece-details">2022 &middot; Porcelain, brass, glass, gems &amp; resin &middot; 11" &times; 13" &times; 20"</div>
+      <div class="divider" style="margin: 2rem 0;"></div>
+      <p>Throughout the ages, man has held sacred the resting place of his departed loved ones. This piece offers a sacred space for the essence of one who has died and honors their unique life and the organic vessel of their soul.</p>
+      <p>As a maker, my urns must be worthy of what they contain. The decorative form and its variety of materials are secondary to its utilitarian function: a tabernacle of essence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement" id="about">
+  <div class="statement-inner reveal">
+    <div class="statement-text">
+      <span class="section-label" style="margin-bottom: 1.75rem;">Artist Statement</span>
+      <blockquote>
+        The cause and effect necessary to make art enthralls me. <strong>Ceramics though? This is what engages me.</strong> I imagine my fingers, activated, pressing fingertip pressure into the clay — and then knuckle notching a cylinder upward. I see myself as a potter, <strong>a prairie potter.</strong>
+      </blockquote>
+      <div class="attribution">— Jonathan Bridges</div>
+    </div>
+    <div class="statement-img">
+      <img src="images/jonathan-studio.png" alt="Jonathan Bridges working in his studio">
+    </div>
+  </div>
+</section>
+
+<!-- EXHIBITIONS -->
+<section class="exhibitions" id="exhibitions">
+  <div class="exhibitions-inner">
+    <div class="exhibitions-header reveal">
+      <h2>Exhibitions</h2>
+      <span class="section-label">Selected Shows</span>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2024</div>
+      <div><div class="exhibition-title">Gestaltinized</div><div class="exhibition-venue">More than Lemons Gallery, Holton, KS</div></div>
+      <div class="exhibition-type">Solo</div>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2024</div>
+      <div><div class="exhibition-title">Between the Teeth</div><div class="exhibition-venue">Dojo Gallery, Lawrence, KS — with Mikki Rossi</div></div>
+      <div class="exhibition-type">Group</div>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2021</div>
+      <div><div class="exhibition-title">International KOGEI Award Toyama</div><div class="exhibition-venue">Toyama Prefectural Museum of Art and Design, Japan</div></div>
+      <div class="exhibition-type">International</div>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2021</div>
+      <div><div class="exhibition-title">Waiting To Exhale</div><div class="exhibition-venue">Jill Krutick Fine Art Gallery, NYC — SHIM Art Network</div></div>
+      <div class="exhibition-type">Group</div>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2008</div>
+      <div><div class="exhibition-title">Ocular Hedonism</div><div class="exhibition-venue">Greenlease Gallery, Rockhurst University, Kansas City</div></div>
+      <div class="exhibition-type">Solo</div>
+    </div>
+    <div class="exhibition-item reveal">
+      <div class="exhibition-year">2008</div>
+      <div><div class="exhibition-title">Living Clay Heavenly Flame</div><div class="exhibition-venue">Work Gallery, New York City — with Mary Johnson</div></div>
+      <div class="exhibition-type">Group</div>
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section class="cv">
+  <div class="cv-inner">
+    <div class="cv-column reveal">
+      <h3>Education</h3>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2002 – 2006</div>
+        <div class="cv-entry-title">MFA, The University of Minnesota</div>
+        <div class="cv-entry-detail">Minneapolis, MN</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-year">1998 – 2002</div>
+        <div class="cv-entry-title">BFA, Alfred University</div>
+        <div class="cv-entry-detail">Alfred, NY</div>
+      </div>
+      <h3 style="margin-top:2.5rem;">Awards &amp; Publication</h3>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2007</div>
+        <div class="cv-entry-title">"Shaping the Future of Craft"</div>
+        <div class="cv-entry-detail">American Craft Council</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2001</div>
+        <div class="cv-entry-title">NCAA Academic All-American</div>
+        <div class="cv-entry-detail">Men's Soccer, Alfred University</div>
+      </div>
+    </div>
+    <div class="cv-column reveal reveal-delay-2">
+      <h3>Experience</h3>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2018 – Present</div>
+        <div class="cv-entry-title">Full-time Studio Artist</div>
+        <div class="cv-entry-detail">Commission work &amp; independent practice</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2014 – 2018</div>
+        <div class="cv-entry-title">Studio Assistant for Kris Kuksi</div>
+        <div class="cv-entry-detail">Lawrence, KS</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2010 – 2014</div>
+        <div class="cv-entry-title">Online Instructor, Art Appreciation</div>
+        <div class="cv-entry-detail">Highland Community College &amp; Missouri Valley College</div>
+      </div>
+      <div class="cv-entry">
+        <div class="cv-entry-year">2010</div>
+        <div class="cv-entry-title">Cup &amp; Saucer Prototype Development</div>
+        <div class="cv-entry-detail">Lesot Corp., Brooklyn, NY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <span class="section-label">Get in Touch</span>
+  <h2 class="reveal">Commissions &amp;<br>Inquiries Welcome</h2>
+  <a href="mailto:JonathanBridgesart@gmail.com" class="contact-email reveal reveal-delay-1">JonathanBridgesart@gmail.com</a>
+  <div class="contact-social reveal reveal-delay-2">
+    <a href="https://instagram.com/jonathanbridgesart" target="_blank" rel="noopener">@jonathanbridgesart</a>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; 2025 Jonathan Bridges. All rights reserved.</span>
+  <span>Ceramics &middot; Bronze &middot; Porcelain</span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
