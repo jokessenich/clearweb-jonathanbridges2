@@ -254,7 +254,7 @@
 
   .statement-body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr;
     gap: 80px;
     align-items: center;
   }
@@ -298,6 +298,9 @@
     border-radius: 2px;
     background: var(--bg-elevated);
     aspect-ratio: 4/5;
+    max-width: 380px;
+    max-height: 520px;
+    justify-self: end;
   }
 
   .statement-video-wrap video {
@@ -929,7 +932,7 @@
       </p>
     </div>
     <div class="statement-video-wrap reveal reveal-delay-2" id="statementVideo">
-   <video autoplay muted loop playsinline preload="metadata">
+      <video autoplay muted loop playsinline preload="metadata">
         <source src="./Video.mp4" type="video/mp4">
       </video>
       <div class="video-gradient-top"></div>
